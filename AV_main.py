@@ -12,6 +12,7 @@ def sudauginti (x,y):
 def padalinti (x,y):
     return x/y
     
+#MENIU PUNKTAI
 print ("Pasirinkite operaciją")
 print ("1. Sudėti")
 print ("2. Atimti")
@@ -43,3 +44,4 @@ while True:
                 break
            else: 
                 print("Suveskite iš naujo taip arba ne teisingai")
+                
