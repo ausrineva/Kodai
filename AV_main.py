@@ -32,6 +32,7 @@ def meniu():
 
 
 meniu()
+# pagrindinis while loopas
 while True:
 
     pasirinkimas = input("Kurią operaciją norite atlikti?")
