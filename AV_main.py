@@ -1,4 +1,16 @@
 import math
+from flask import Flask
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def sveikivisi():
+    return "<p>Skaičiuotuvas<p>"
+
+
+if __name__ == "__main__":
+    app.run()
 
 
 def sudeti(x, y):
