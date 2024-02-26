@@ -42,9 +42,10 @@ def skaiciuotuvas():
 
 @app.route("/skaiciavimas")
 def skaiciuoti():
-    x = request.args.get("x")
-    y = request.args.get("y")
+    x = int(request.args.get("x"))
+    y = int(request.args.get("y"))
     sum = sudeti(x, y)
+    return f"{sum}"
 
 
 if __name__ == "__main__":
