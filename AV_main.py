@@ -24,9 +24,23 @@ def padalinti(x, y):
     return x/y
 
 
-@app.route("/")
+@app.route("/")  # Route 1
 def skaiciuotuvas():
-    return "<p>Skaičiuotuvas<p>"
+
+    return f"""
+                <form action="/skaicius">
+                
+                    <label for="test">x</label><br>
+                        <input type="text" id="test" name="test" value="0"><br>
+                        </br></br>
+
+                    <label for="test2">y</label><br>
+                        <input type="text" id="test2" name="test2" value="0"><br><br>
+                        </br></br>
+
+                    <input type="submit" value="Submit">
+                </form> 
+            """
 
 
 @app.route("/skaiciavimas")
