@@ -30,10 +30,10 @@ def skaiciuotuvas():
     return f"""
                 <form action="/skaiciavimas">
                     <label for="test">x</label><br>
-                        <input type="text" id="test" name="test" value="0"><br>
+                        <input type="text" id="x" name="x" value="0"><br>
                         </br></br>
-                    <label for="test2">y</label><br>
-                        <input type="text" id="test2" name="test2" value="0"><br><br>
+                    <label for="y">y</label><br>
+                        <input type="text" id="y" name="y" value="0"><br><br>
                         </br></br>
                     <input type="submit" value="Submit">
                 </form> 
