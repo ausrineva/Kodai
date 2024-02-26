@@ -24,12 +24,12 @@ def padalinti(x, y):
     return x/y
 
 
-@app.route("/")  # Route 1
+@app.route("/")
 def skaiciuotuvas():
 
     return f"""
                 <form action="/skaicius">
-                
+
                     <label for="test">x</label><br>
                         <input type="text" id="test" name="test" value="0"><br>
                         </br></br>
@@ -45,17 +45,17 @@ def skaiciuotuvas():
 
 @app.route("/skaiciavimas")
 def skaiciuoti():
-    if not request.args.get("x") or not request.args.get("y"):
-        return "nėra pilno argumento"
-
-    x = request.args.get("x")
-    y = request.args.get("y")
-    sum = sudeti(x, y)
-    return sum
+    try:
+        x = float(request.args.get("x", 0))
+        y = float(request.args.get("y", 0))
+        result = sudeti(x, y)  # Assuming addition is the desired operation
+        return f"<p>Result: {result}</p>"
+    except ValueError:
+        return "Įveskite tik skaičius."
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
 '''
 if __name__ == "__main__":
