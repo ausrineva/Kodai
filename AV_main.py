@@ -31,6 +31,9 @@ def skaiciuotuvas():
 
 @app.route("/skaiciavimas")
 def skaiciuoti():
+    if not request.args.get("x") or not request.args.get("y"):
+        return "nėra pilno argumento"
+
     x = request.args.get("x")
     y = request.args.get("y")
     sum = sudeti(x, y)
