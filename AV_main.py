@@ -28,16 +28,13 @@ def padalinti(x, y):
 def skaiciuotuvas():
 
     return f"""
-                <form action="/skaicius">
-
+                <form action="/skaiciavimas">
                     <label for="test">x</label><br>
                         <input type="text" id="test" name="test" value="0"><br>
                         </br></br>
-
                     <label for="test2">y</label><br>
                         <input type="text" id="test2" name="test2" value="0"><br><br>
                         </br></br>
-
                     <input type="submit" value="Submit">
                 </form> 
             """
@@ -45,17 +42,13 @@ def skaiciuotuvas():
 
 @app.route("/skaiciavimas")
 def skaiciuoti():
-    try:
-        x = float(request.args.get("x", 0))
-        y = float(request.args.get("y", 0))
-        result = sudeti(x, y)  # Assuming addition is the desired operation
-        return f"<p>Result: {result}</p>"
-    except ValueError:
-        return "Įveskite tik skaičius."
+    x = request.args.get("x")
+    y = request.args.get("y")
+    sum = sudeti(x, y)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 '''
 if __name__ == "__main__":
