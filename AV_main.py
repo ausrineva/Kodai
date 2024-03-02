@@ -21,6 +21,8 @@ def saknis(skaicius):
 
 
 def padalinti(x, y):
+    if y == 0:
+        return "Dalyba iš 0 negalima"
     return x/y
 
 
