@@ -31,8 +31,8 @@ def skaiciuotuvas():
 
     return f"""
             <form action="/skaiciavimas">
-                    <label for="zenklai">Ką norėsite atlikti?</label><br>
-                <select id="zenklai" name="zenklai" form="sprendimusarasas"><br>
+                    <label for="zenklas">Ką norėsite atlikti?</label><br>
+                <select id="zenklai" name="zenklai"><br>
                     <option value="sudeti">sudėti (+)</option>
                     <option value="atimti">atimti (-)</option>
                     <option value="sudauginti">sudauginti (*)</option>
@@ -58,7 +58,7 @@ def skaiciuoti():
 
     rezult = 0
 
-    if operation == "suma":
+    if operation == "sudeti":
         rezult = sudeti(x, y)
 
     elif operation == "atimti":
@@ -67,8 +67,8 @@ def skaiciuoti():
     elif operation == "sudauginti":
         rezult = sudauginti(x, y)
 
-    elif operation == "saknis":
-        rezult = saknis(x, y)
+    elif operation == "padalinti":
+        rezult = padalinti(x, y)
 
     return f"{rezult}"
 
