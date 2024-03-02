@@ -59,8 +59,16 @@ def skaiciuoti():
     if operation == "suma":
         rezult = sudeti(x, y)
 
-    sum = sudeti(x, y)
-    return f"{sum}"
+    elif operation == "atimti":
+        rezult = atimti(x, y)
+
+    elif operation == "sudauginti":
+        rezult = sudauginti(x, y)
+
+    elif operation == "saknis":
+        rezult = saknis(x, y)
+
+    return f"{rezult}"
 
 
 if __name__ == "__main__":
