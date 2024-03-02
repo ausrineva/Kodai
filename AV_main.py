@@ -56,6 +56,8 @@ def skaiciuoti():
     x = int(request.args.get("x"))
     y = int(request.args.get("y"))
 
+    rezult = 0
+
     if operation == "suma":
         rezult = sudeti(x, y)
 
