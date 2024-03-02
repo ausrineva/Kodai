@@ -32,11 +32,11 @@ def skaiciuotuvas():
     return f"""
             <form action="/skaiciavimas">
                     <label for="zenklai">Ką norėsite atlikti?</label><br>
-                <select id="zenklai" name="sprendimusarasas" form="sprendimusarasas"><br>
-                    <option value="suma">sudėti (+)</option>
-                    <option value="atimtis">atimti (-)</option>
-                    <option value="daugyba">sudauginti (*)</option>
-                    <option value="dalyba">padalinti (/)</option>
+                <select id="zenklai" name="zenklai" form="sprendimusarasas"><br>
+                    <option value="sudeti">sudėti (+)</option>
+                    <option value="atimti">atimti (-)</option>
+                    <option value="sudauginti">sudauginti (*)</option>
+                    <option value="padalinti">padalinti (/)</option>
                 </select><br>  
 
                 <label for="x">x</label><br>
@@ -52,8 +52,13 @@ def skaiciuotuvas():
 
 @app.route("/skaiciavimas")
 def skaiciuoti():
+    operation = request.args.get("zenklai")
     x = int(request.args.get("x"))
     y = int(request.args.get("y"))
+
+    if operation == "suma":
+        rezult = sudeti(x, y)
+
     sum = sudeti(x, y)
     return f"{sum}"
 
