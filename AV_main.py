@@ -28,15 +28,23 @@ def padalinti(x, y):
 def skaiciuotuvas():
 
     return f"""
-                <form action="/skaiciavimas">
-                    <label for="test">x</label><br>
-                        <input type="text" id="x" name="x" value="0"><br>
-                        </br></br>
-                    <label for="y">y</label><br>
-                        <input type="text" id="y" name="y" value="0"><br><br>
-                        </br></br>
-                    <input type="submit" value="Submit">
-                </form> 
+            <form action="/skaiciavimas">
+                    <label for="zenklai">Ką norėsite atlikti?</label><br>
+                <select id="zenklai" name="sprendimusarasas" form="sprendimusarasas"><br>
+                    <option value="suma">sudėti (+)</option>
+                    <option value="atimtis">atimti (-)</option>
+                    <option value="daugyba">sudauginti (*)</option>
+                    <option value="dalyba">padalinti (/)</option>
+                </select><br>  
+
+                <label for="x">x</label><br>
+                <input type="text" id="x" name="x" value="0"><br>
+                
+                <label for="y">y</label><br>
+                <input type="text" id="y" name="y" value="0"><br>
+                
+                <input type="submit" value="Submit">
+            </form> 
             """
 
 
