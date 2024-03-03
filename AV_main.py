@@ -1,5 +1,6 @@
+from html.entities import html5
 import math
-from flask import Flask, request
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
@@ -28,6 +29,7 @@ def padalinti(x, y):
 
 @app.route("/")
 def skaiciuotuvas():
+    return render_template('pirmas.html')
 
     return f"""
             <form action="/skaiciavimas">
