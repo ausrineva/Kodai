@@ -28,28 +28,8 @@ def padalinti(x, y):
 
 
 @app.route("/")
-def skaiciuotuvas():
-    return render_template('pirmas.html')
-
-    return f"""
-            <form action="/skaiciavimas">
-                    <label for="zenklas">Ką norėsite atlikti?</label><br>
-                <select id="zenklai" name="zenklai"><br>
-                    <option value="sudeti">sudėti (+)</option>
-                    <option value="atimti">atimti (-)</option>
-                    <option value="sudauginti">sudauginti (*)</option>
-                    <option value="padalinti">padalinti (/)</option>
-                </select><br>  
-
-                <label for="x">x</label><br>
-                <input type="text" id="x" name="x" value="0"><br>
-                
-                <label for="y">y</label><br>
-                <input type="text" id="y" name="y" value="0"><br>
-                
-                <input type="submit" value="Submit">
-            </form> 
-            """
+def index():
+    return render_template('index.html', title='Skaičiuotuvas')
 
 
 @app.route("/skaiciavimas")
