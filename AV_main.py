@@ -52,7 +52,7 @@ def skaiciuoti():
     elif operation == "padalinti":
         rezult = padalinti(x, y)
 
-    return f"{rezult}"
+    return render_template('index.html', title='Skaičiuotuvas', rezultatas=rezult)
 
 
 if __name__ == "__main__":
