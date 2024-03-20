@@ -3,29 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>/skaiciavimas</title>
+    <title>Skaičiuotuvas</title>
   </head>
-
   <body>
-    <form action="/skaiciavimas">
-      <label for="zenklas">Ką norėsite atlikti?</label><br />
-      <select id="zenklai" name="zenklai">
+    <div id="inputDisplay">0</div>
+    <form action="/skaiciavimas" method="get">
+      <input type="hidden" id="x" name="x" value="0" />
+      <input type="hidden" id="y" name="y" value="0" />
+      <input type="hidden" id="zenklai" name="zenklai" value="sudeti" />
+
+      <div id="calculator">
+        <button type="button" onclick="setOperation('sudeti')">+</button>
+        <button type="button" onclick="setOperation('atimti')">-</button>
+        <button type="button" onclick="setOperation('sudauginti')">*</button>
+        <button type="button" onclick="setOperation('padalinti')">/</button>
         <br />
-        <option value="sudeti">sudėti (+)</option>
-        <option value="atimti">atimti (-)</option>
-        <option value="sudauginti">sudauginti (*)</option>
-        <option value="padalinti">padalinti (/)</option></select
-      ><br />
-
-      <label for="x">x</label><br />
-      <input type="text" id="x" name="x" value="0" /><br />
-
-      <label for="y">y</label><br />
-      <input type="text" id="y" name="y" value="0" /><br />
-      <input type="submit" value="Submit" />
-      <br />
+        <button type="button" onclick="appendToNumber(1)">1</button>
+        <button type="button" onclick="appendToNumber(2)">2</button>
+        <button type="button" onclick="appendToNumber(3)">3</button>
+        <br />
+        <button type="button" onclick="appendToNumber(4)">4</button>
+        <button type="button" onclick="appendToNumber(5)">5</button>
+        <button type="button" onclick="appendToNumber(6)">6</button>
+        <br />
+        <button type="button" onclick="appendToNumber(7)">7</button>
+        <button type="button" onclick="appendToNumber(8)">8</button>
+        <button type="button" onclick="appendToNumber(9)">9</button>
+        <br />
+        <button type="button" onclick="appendToNumber(0)">0</button>
+        <button type="button" onclick="appendToNumber(',')">,</button>
+        <br />
+        <button type="submit">Skaičiuoti</button>
+      </div>
     </form>
+    <h2>Jūsų rezultatas: {{ rezultatas }}</h2>
 
-    <h2>Jūsų rezultatas: {{rezultatas}}</h2>
+    <script>
+      let displayValue = "0";
+      let nextNumber = false;
+      let lastOperationSymbol = "";
+
+      function appendToNumber(digit) {
+        if (digit === ",") {
+          if (
+            (nextNumber &&
+              !document.getElementById("y").value.includes(".") &&
+              displayValue.includes(lastOperationSymbol)) ||
+            (!nextNumber && !document.getElementById("x").value.includes("."))
+          ) {
+            digit = ".";
+            if (displayValue === "0") {
+              displayValue = "0,";
+            } else {
+              displayValue += ","; // Display comma, store period
+            }
+          } else {
+            // Ignore additional commas for the same number part
+            return;
+          }
+        } else {
+          if (displayValue === "0") {
+            displayValue = digit.toString();
+          } else {
+            displayValue += digit;
+          }
+        }
+
+        if (nextNumber) {
+          let operationIndex = displayValue.lastIndexOf(lastOperationSymbol);
+          document.getElementById("y").value = displayValue
+            .substring(operationIndex + 1)
+            .replace(/,/g, ".");
+        } else {
+          document.getElementById("x").value = displayValue.replace(/,/g, ".");
+        }
+
+        document.getElementById("inputDisplay").innerText = displayValue;
+      }
+
+      function setOperation(operation) {
+        if (!nextNumber || displayValue === "0") {
+          nextNumber = true;
+          let operationSymbol = getOperationSymbol(operation);
+          lastOperationSymbol = operationSymbol;
+          displayValue += operationSymbol;
+          document.getElementById("zenklai").value = operation;
+          document.getElementById("inputDisplay").innerText = displayValue;
+        }
+      }
+
+      function getOperationSymbol(operation) {
+        switch (operation) {
+          case "sudeti":
+            return "+";
+          case "atimti":
+            return "-";
+          case "sudauginti":
+            return "*";
+          case "padalinti":
+            return "/";
+          default:
+            return "";
+        }
+      }
+    </script>
   </body>
 </html>

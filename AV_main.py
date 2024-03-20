@@ -35,8 +35,8 @@ def index():
 @app.route("/skaiciavimas")
 def skaiciuoti():
     operation = request.args.get("zenklai")
-    x = int(request.args.get("x"))
-    y = int(request.args.get("y"))
+    x = float(request.args.get("x"))
+    y = float(request.args.get("y"))
 
     rezult = 0
 
