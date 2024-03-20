@@ -7,6 +7,7 @@
     <style></style>
   </head>
   <body>
+    <h1>PINIGŲ SKAIČIUOKLĖ</h1>
     <!--- Rodomas įvesties rezultatas-->
     <div id="inputDisplay">0</div>
 
@@ -74,7 +75,7 @@
           let result = eval(calculation);
           // Rodo rezultatą skaičiuotuvo ekrane, pakeičiant tašką atgal į kablelį
           document.getElementById("result").innerText =
-            "Jūsų rezultatas: " + result.toString().replace(".", ",");
+            "Jūsų rezultatas: " + result.toString().replace(".", ",") + " €";
           // Nustatome ekraną atgal į pradinę būseną (rodo 0) naujiems skaičiavimams
           displayreiksme = "0"; // Kitam skaiciavimus paresetinama
           document.getElementById("inputDisplay").innerText = "0";
