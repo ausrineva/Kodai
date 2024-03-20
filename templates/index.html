@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Skaičiuotuvas</title>
+    <style></style>
   </head>
   <body>
     <!--- Rodomas įvesties rezultatas-->
@@ -35,6 +36,19 @@
       <button type="button" onclick="calculate()">Skaičiuoti</button>
     </div>
     <h2 id="result">Jūsų rezultatas:</h2>
+    <!-- ##################################################################### -->
+    <!-- Valiutos pasirinkimas -->
+    <div>
+      <select id="currencySelector">
+        <option value="1" data-symbol="€">EUR</option>
+        <option value="0.85" data-symbol="$">USD</option>
+        <option value="0.77" data-symbol="£">>GBP</option>
+      </select>
+      <button type="button" onclick="convertCurrency()">Konvertuoti</button>
+    </div>
+
+    <!-- Konvertuoto rezultato atvaizdavimas -->
+    <h2 id="convertedResult">Valiutos keitykla:</h2>
 
     <script>
       // Kintamasis, kuriame saugomas skaičiuotuvo ekrano rodmenys
@@ -71,6 +85,40 @@
           // Nustatome ekraną atgal į pradinę būseną (rodo 0)
           displayreiksme = "0";
         }
+      }
+
+      function convertCurrency() {
+        // 1. Randa elementą su id "result" ir išsaugo jo tekstą.
+        let originalResultText = document.getElementById("result").innerText;
+
+        // 2. Iškerpa rezultato skaičių iš teksto, pakeičia kablelį į tašką (europietiškas skaičių formatas į tarptautinį).
+        let originalResult = originalResultText
+          .substring(originalResultText.indexOf(": ") + 2)
+          .replace(",", ".");
+
+        // 3. Randa pasirinkimo elementą (dropdown), kuriame išvardytos valiutos.
+        let currencySelector = document.getElementById("currencySelector");
+
+        // 4. Iš pasirinkimo elemento gauna pasirinktos valiutos kursą.
+        let currencyRate = currencySelector.value;
+
+        // 5. Iš pasirinkimo elemento gauna pasirinktos valiutos simbolį.
+        let currencySymbol =
+          currencySelector.options[currencySelector.selectedIndex].getAttribute(
+            "data-symbol"
+          );
+
+        // 6. Atliekamas skaičiavimas: konvertuoja originalų rezultatą pagal pasirinktos valiutos kursą ir apvalina iki dviejų skaitmenų po kablelio.
+        let convertedResult = (
+          parseFloat(originalResult) * parseFloat(currencyRate)
+        ).toFixed(2);
+
+        // 7. Atvaizduoja konvertuotą rezultatą su valiutos simboliu, pakeičiant tašką atgal į kablelį (tarptautinis skaičių formatas į europietišką).
+        document.getElementById("convertedResult").innerText =
+          "Valiutos keitykla: " +
+          convertedResult.toString().replace(".", ",") +
+          " " +
+          currencySymbol;
       }
     </script>
   </body>
