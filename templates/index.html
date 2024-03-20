@@ -37,6 +37,7 @@
       <button type="button" onclick="calculate()">Skaičiuoti</button>
     </div>
     <h2 id="result">Jūsų rezultatas:</h2>
+    <div id="quote"></div>
     <!-- ##################################################################### -->
     <!-- Valiutos pasirinkimas -->
     <div>
@@ -91,6 +92,27 @@
         // Atnaujiname skaičiuotuvo ekraną su nauja reikšme
         document.getElementById("inputDisplay").innerText = displayreiksme;
       }
+      // Kodas const quotes = [...]; sukuria kintamąjį quotes, kuris yra masyvas. Masyvas quotes yra pildomas tekstinėmis eilutėmis - šiuo atveju, citatomis.
+      const quotes = [
+        "Warren Buffet yra pasakęs: 'Netaupykite to, kas lieka išleidus, bet išleiskite tai, kas lieka po taupymo.'",
+        "Benjamin Franklin įspėjo: 'Saugokitės mažų išlaidų. Maža skylė gali nugrimzdyti didelį laivą.'",
+        "Dave Ramsey pasakė: 'Mes perkame daiktus, kurių mums nereikia, su pinigais, kurių neturime.'",
+        "Suze Orman pataria: 'Vienintelis būdas visam laikui perimti kontrolę prieš savo finansinį gyvenimą - išspręsti pagrindinę problemą.'",
+        "Tony Robbins sako: 'Svarbu ne suma, o planas.'",
+        "Jim Rohn teigia: 'Formalus išsilavinimas padarys iš jūsų pragyvenimą; savimokslis - turtą.'",
+        "Oprah Winfrey pataria: 'Būkite dėkingi už tai, ką turite; galiausiai turėsite daugiau. Jei sutelksite dėmesį į tai, ko neturite, niekada neturėsite pakankamai.'",
+        "Elon Musk sako: 'Manau, kad eiliniai žmonės gali pasirinkti būti neeiliniai.'",
+        "J.K. Rowling teigia: 'Jei neimsite savo gyvenimo kontrolės, tai padarys kažkas kitas.'",
+      ];
+
+      function displayQuote() {
+        // Randa HTML elementą pagal ID "quote" ir saugo jį kintamajame 'quoteElement'.
+        const quoteElement = document.getElementById("quote");
+        // Sugeneruoja atsitiktinį indeksą naudojant 'quotes' masyvo ilgį. Math.random() generuoja atsitiktinį skaičių tarp 0 ir 1, kuris dauginamas iš 'quotes' masyvo ilgio. Math.floor() apvalina rezultatą žemyn iki artimiausio sveiko skaičiaus, užtikrinant, kad indeksas būtų tinkamas masyvo elementui pasiekti.
+        const randomIndex = Math.floor(Math.random() * quotes.length);
+        // Nustato 'quoteElement' teksto turinį į atsitiktinai pasirinktą citatą iš 'quotes' masyvo, naudojant 'randomIndex'. Tai leidžia kiekvieną kartą, kai ši funkcija yra kviečiama, atvaizduoti atsitiktinę citatą.
+        quoteElement.textContent = quotes[randomIndex];
+      }
 
       function calculate() {
         try {
@@ -104,6 +126,9 @@
           // Nustatome ekraną atgal į pradinę būseną (rodo 0) naujiems skaičiavimams
           displayreiksme = "0"; // Kitam skaiciavimus paresetinama
           document.getElementById("inputDisplay").innerText = "0";
+
+          // Po skaičiavimo rodyti atsitiktinę citatą
+          displayQuote();
         } catch (error) {
           // Jeigu įvyksta klaida skaičiavimo metu, informuojame vartotoją
           document.getElementById("result").innerText = "Klaida";
