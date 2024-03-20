@@ -6,104 +6,70 @@
     <title>Skaičiuotuvas</title>
   </head>
   <body>
+    <!--- Rodomas įvesties rezultatas-->
     <div id="inputDisplay">0</div>
-    <form action="/skaiciavimas" method="get">
-      <input type="hidden" id="x" name="x" value="0" />
-      <input type="hidden" id="y" name="y" value="0" />
-      <input type="hidden" id="zenklai" name="zenklai" value="sudeti" />
 
-      <div id="calculator">
-        <button type="button" onclick="setOperation('sudeti')">+</button>
-        <button type="button" onclick="setOperation('atimti')">-</button>
-        <button type="button" onclick="setOperation('sudauginti')">*</button>
-        <button type="button" onclick="setOperation('padalinti')">/</button>
-        <br />
-        <button type="button" onclick="appendToNumber(1)">1</button>
-        <button type="button" onclick="appendToNumber(2)">2</button>
-        <button type="button" onclick="appendToNumber(3)">3</button>
-        <br />
-        <button type="button" onclick="appendToNumber(4)">4</button>
-        <button type="button" onclick="appendToNumber(5)">5</button>
-        <button type="button" onclick="appendToNumber(6)">6</button>
-        <br />
-        <button type="button" onclick="appendToNumber(7)">7</button>
-        <button type="button" onclick="appendToNumber(8)">8</button>
-        <button type="button" onclick="appendToNumber(9)">9</button>
-        <br />
-        <button type="button" onclick="appendToNumber(0)">0</button>
-        <button type="button" onclick="appendToNumber(',')">,</button>
-        <br />
-        <button type="submit">Skaičiuoti</button>
-      </div>
-    </form>
-    <h2>Jūsų rezultatas: {{ rezultatas }}</h2>
+    <!--- Skaičiuotuvo mygtukų sritis-->
+    <div id="calculator">
+      <!-- Aritmetinių operacijų mygtukai, kiekvienas kviečia appendToDisplay funkciją su atitinkama operacija kaip argumentu -->
+      <button type="button" onclick="appendToDisplay('+')">+</button>
+      <button type="button" onclick="appendToDisplay('-')">-</button>
+      <button type="button" onclick="appendToDisplay('*')">*</button>
+      <button type="button" onclick="appendToDisplay('/')">/</button>
+      <br />
+      <button type="button" onclick="appendToDisplay('1')">1</button>
+      <button type="button" onclick="appendToDisplay('2')">2</button>
+      <button type="button" onclick="appendToDisplay('3')">3</button>
+      <br />
+      <button type="button" onclick="appendToDisplay('4')">4</button>
+      <button type="button" onclick="appendToDisplay('5')">5</button>
+      <button type="button" onclick="appendToDisplay('6')">6</button>
+      <br />
+      <button type="button" onclick="appendToDisplay('7')">7</button>
+      <button type="button" onclick="appendToDisplay('8')">8</button>
+      <button type="button" onclick="appendToDisplay('9')">9</button>
+      <br />
+      <button type="button" onclick="appendToDisplay('0')">0</button>
+      <button type="button" onclick="appendToDisplay(',')">,</button>
+      <br />
+      <button type="button" onclick="calculate()">Skaičiuoti</button>
+    </div>
+    <h2 id="result">Jūsų rezultatas:</h2>
 
     <script>
-      let displayValue = "0";
-      let nextNumber = false;
-      let lastOperationSymbol = "";
+      // Kintamasis, kuriame saugomas skaičiuotuvo ekrano rodmenys
+      let displayreiksme = "0";
 
-      function appendToNumber(digit) {
-        if (digit === ",") {
-          if (
-            (nextNumber &&
-              !document.getElementById("y").value.includes(".") &&
-              displayValue.includes(lastOperationSymbol)) ||
-            (!nextNumber && !document.getElementById("x").value.includes("."))
-          ) {
-            digit = ".";
-            if (displayValue === "0") {
-              displayValue = "0,";
-            } else {
-              displayValue += ","; // Display comma, store period
-            }
-          } else {
-            // Ignore additional commas for the same number part
-            return;
-          }
+      function appendToDisplay(value) {
+        // Jei ekrane rodomas 0, o paspaustas mygtukas nėra kablelis, pakeičiame rodmenis į paspausto mygtuko reikšmę
+        if (displayreiksme === "0" && value !== ",") {
+          displayreiksme = value;
         } else {
-          if (displayValue === "0") {
-            displayValue = digit.toString();
-          } else {
-            displayValue += digit;
-          }
+          // Prie esamos reikšmės pridedame naują simbolį
+          displayreiksme += value;
         }
-
-        if (nextNumber) {
-          let operationIndex = displayValue.lastIndexOf(lastOperationSymbol);
-          document.getElementById("y").value = displayValue
-            .substring(operationIndex + 1)
-            .replace(/,/g, ".");
-        } else {
-          document.getElementById("x").value = displayValue.replace(/,/g, ".");
-        }
-
-        document.getElementById("inputDisplay").innerText = displayValue;
+        // Atnaujiname skaičiuotuvo ekraną su nauja reikšme
+        document.getElementById("inputDisplay").innerText = displayreiksme;
       }
 
-      function setOperation(operation) {
-        if (!nextNumber || displayValue === "0") {
-          nextNumber = true;
-          let operationSymbol = getOperationSymbol(operation);
-          lastOperationSymbol = operationSymbol;
-          displayValue += operationSymbol;
-          document.getElementById("zenklai").value = operation;
-          document.getElementById("inputDisplay").innerText = displayValue;
-        }
-      }
-
-      function getOperationSymbol(operation) {
-        switch (operation) {
-          case "sudeti":
-            return "+";
-          case "atimti":
-            return "-";
-          case "sudauginti":
-            return "*";
-          case "padalinti":
-            return "/";
-          default:
-            return "";
+      function calculate() {
+        try {
+          // Keičiame kablelius į taškus, nes JavaScript skaičiuose naudoja tašką
+          let calculation = displayreiksme.replace(/,/g, ".");
+          // Naudojame eval funkciją, kad apskaičiuotume išreikštą formulę. Eval leidžia atlikti sudėtingesnes operacijas, kaip šiuo atvėju sudedu, atimu ar dauginu tuo pačiu metu.
+          let result = eval(calculation);
+          // Rodo rezultatą skaičiuotuvo ekrane, pakeičiant tašką atgal į kablelį
+          document.getElementById("result").innerText =
+            "Jūsų rezultatas: " + result.toString().replace(".", ",");
+          // Nustatome ekraną atgal į pradinę būseną (rodo 0) naujiems skaičiavimams
+          displayreiksme = "0"; // Kitam skaiciavimus paresetinama
+          document.getElementById("inputDisplay").innerText = "0";
+        } catch (error) {
+          // Jeigu įvyksta klaida skaičiavimo metu, informuojame vartotoją
+          document.getElementById("result").innerText = "Klaida";
+          document.getElementById("inputDisplay").innerText = "0";
+          // Nustatome ekraną atgal į pradinę būseną (rodo 0)
+          displayreiksme = "0";
         }
       }
     </script>
