@@ -1,42 +1,121 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> <!-- Nurodo, kad dokumentas yra HTML5 tipo -->
+<html lang="en"> <!-- Pagrindinis dokumento žymėjimas, nurodantis kalbą (anglų) -->
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Skaičiuotuvas</title>
-    <style></style>
+    <meta charset="UTF-8" /> <!-- Nustato simbolių kodavimą UTF-8, kuris apima daugumą pasaulio rašmenų -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Užtikrina puslapio teisingą rodymą įvairiuose įrenginiuose -->
+    <title>Skaičiuotuvas</title> <!-- Nustato naršyklės kortelės pavadinimą -->
+    <style>
+      /* Čia nurodomi puslapio stiliai. Pavyzdžiui: */
+      body {
+        display: flex; /* Nustato flex konteinerį, kuris leidžia lengvai išdėstyti vaikų elementus */
+        flex-direction: column; /* Vaikų išdėstymo kryptis - vertikali */
+        align-items: center; /* Centruoja vaikus horizontaliai */
+        justify-content: center; /* Centruoja vaikus vertikaliai */
+        height: 100vh; /* Nustato konteinerio aukštį, kad jis užimtų visą ekrano aukštį */
+        margin: 0; /* Pašalina naršyklės numatytąjį kraštinių tarpą */
+        padding: 20px; /* Nustato vidinį atstumą nuo kraštų */
+        font-family: Arial, sans-serif; /* Nustato šriftą */
+        background-color: #eaeaea; /* Fono spalva */
+      }
+      h1 {
+        margin: 20px 0;
+        color: #333;
+      }
+      #calculator {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        background-color: #f9f0f0;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: fit-content;
+      }
+      #inputDisplay,
+      #result,
+      #convertedResult {
+        grid-column: 1 / -1;
+        background-color: #d89796;
+        color: white;
+        text-align: right;
+        padding: 10px;
+        border-radius: 15px;
+        margin-bottom: 10px;
+        box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: none;
+      }
+      #result {
+        background-color: white;
+        color: #333;
+        border-radius: 15px; /* Rounded corners for result display */
+      }
+      button {
+        background-color: #ce7978;
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #b66667;
+      }
+      select,
+      .convert-btn {
+        grid-column: 1 / -1;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        text-align: center;
+      }
+      /* Extra styles for symmetrical layout */
+      .row {
+        display: contents; /* This allows the .row to not interfere with grid */
+      }
+      .button-full {
+        grid-column: span 4; /* Make the button take full row */
+      }
+    </style>
   </head>
   <body>
     <h1>PINIGŲ SKAIČIUOKLĖ</h1>
-    <!--- Rodomas įvesties rezultatas-->
+    <!-- Display for input -->
     <div id="inputDisplay">0</div>
-
-    <!--- Skaičiuotuvo mygtukų sritis-->
+    <!-- Calculator buttons -->
     <div id="calculator">
-      <!-- Aritmetinių operacijų mygtukai, kiekvienas kviečia appendToDisplay funkciją su atitinkama operacija kaip argumentu -->
-      <button type="button" onclick="appendToDisplay('+')">+</button>
-      <button type="button" onclick="appendToDisplay('-')">-</button>
-      <button type="button" onclick="appendToDisplay('*')">*</button>
-      <button type="button" onclick="appendToDisplay('/')">/</button>
-      <br />
-      <button type="button" onclick="appendToDisplay('1')">1</button>
-      <button type="button" onclick="appendToDisplay('2')">2</button>
-      <button type="button" onclick="appendToDisplay('3')">3</button>
-      <br />
-      <button type="button" onclick="appendToDisplay('4')">4</button>
-      <button type="button" onclick="appendToDisplay('5')">5</button>
-      <button type="button" onclick="appendToDisplay('6')">6</button>
-      <br />
-      <button type="button" onclick="appendToDisplay('7')">7</button>
-      <button type="button" onclick="appendToDisplay('8')">8</button>
-      <button type="button" onclick="appendToDisplay('9')">9</button>
-      <br />
-      <button type="button" onclick="appendToDisplay('0')">0</button>
-      <button type="button" onclick="appendToDisplay(',')">,</button>
-      <br />
-      <button type="button" onclick="calculate()">Skaičiuoti</button>
+      <!-- Arithmetic operation buttons, each calls appendToDisplay function with corresponding operation as an argument -->
+      <div class="row">
+        <button type="button" onclick="appendToDisplay('+')">+</button>
+        <button type="button" onclick="appendToDisplay('-')">-</button>
+        <button type="button" onclick="appendToDisplay('*')">*</button>
+        <button type="button" onclick="appendToDisplay('/')">/</button>
+      </div>
+      <div class="row">
+        <button type="button" onclick="appendToDisplay('7')">7</button>
+        <button type="button" onclick="appendToDisplay('8')">8</button>
+        <button type="button" onclick="appendToDisplay('9')">9</button>
+      </div>
+      <div class="row">
+        <button type="button" onclick="appendToDisplay('4')">4</button>
+        <button type="button" onclick="appendToDisplay('5')">5</button>
+        <button type="button" onclick="appendToDisplay('6')">6</button>
+      </div>
+      <div class="row">
+        <button type="button" onclick="appendToDisplay('1')">1</button>
+        <button type="button" onclick="appendToDisplay('2')">2</button>
+        <button type="button" onclick="appendToDisplay('3')">3</button>
+      </div>
+      <div class="row">
+        <button type="button" onclick="appendToDisplay('0')">0</button>
+        <button type="button" onclick="appendToDisplay(',')">,</button>
+        <button class="button-full" type="button" onclick="calculate()">
+          Skaičiuoti
+        </button>
+      </div>
     </div>
-    <h2 id="result">Jūsų rezultatas:</h2>
+    <div id="result">Jūsų rezultatas: {{rezultatas}}</div>
     <div id="quote"></div>
     <!-- ##################################################################### -->
     <!-- Valiutos pasirinkimas -->
@@ -76,7 +155,17 @@
 
     <!-- Konvertuoto rezultato atvaizdavimas -->
     <h2 id="convertedResult">Valiutos keitykla:</h2>
+<div>
+  <!-- Atvaizduojami išsaugoti rezultatai -->
+<h2>Atliktų skaičiavimų istorija:</h2>
+<ul id="calculationsList">
+{% for calc in visi_rezultatai %}
+  <li>
+    {{ calc.Operacija }}: {{ calc.x }} ir {{ calc.y }} = {{ calc.Rezultatas }}
+  </li>
+{% endfor %}
 
+</ul>
     <script>
       // Kintamasis, kuriame saugomas skaičiuotuvo ekrano rodmenys
       let displayreiksme = "0";
